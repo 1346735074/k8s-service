@@ -1,0 +1,33 @@
+#----------rc-------------
+apiVersion: v1
+kind: ReplicationController                   #副本控制器
+metadata:
+  name: myslq                                 # RC的名称 全全局唯一
+spec:
+  replicas: 1                                 # Pod副本数
+  selector:
+    app: mysql                                # 符合目标的Pod拥有此标签
+  template:                                   # 根据此模板创建Pod的副本（实例）
+    metadata:
+      labels:
+        app: mysql                            # Pod 副本拥有的标签 对应RC 的Selector
+    spec:
+      containers:                             # Pod 内容器的定义部分
+        - name: mysql                         # 容器的名称
+          image: mysql                        # 容器对应的Docker image
+          ports:
+            - containerPort: 3306             # 容器应用监听的端口
+          env:                                # 注入容器内的环境变量
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456"
+---
+#----------svc-------------
+apiVersion: v1
+kind: Service                   # 表明是kubernetes service
+metadata:
+  name: myslq                                 # service的名称 全全局唯一
+spec:
+  ports:
+    - port: 3306              # service提供服务的端口号
+  selector:
+    app: mysql              # Service 对应的pod拥有这里定义的标签
