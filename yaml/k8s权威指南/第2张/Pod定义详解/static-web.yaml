@@ -1,0 +1,21 @@
+#静态 Pod p103
+apiVersion: v1
+kind : Pod
+metadata:
+  name: static-web
+  labels:
+    name : static-web
+spec:
+  containers:
+  - name : static-web
+    image : nginx
+    ports:
+    - name: web
+      containerPort: 80
+
+
+#1) 配置文件方式
+  #首先， 需要设置 kubelet的启动参数 “--config”， 指定 kubelet需要监控的配置文件所在的目 录， kubelet会定期扫描该目录 ， 井根据该目录中 的.yam! 或扣on 文件进行创建操作。
+  #假设配置目录为/etc/kubelet.d/， 配置启动参数:--config=/etc/kubelet.d/， 然后重启 kubelet服务。
+  #在目录/etc/kubelet.d中放入 static-web.yam!文件，
+  #内容如下:

@@ -1,0 +1,17 @@
+# kubectl create -f frontend-localredis-pod.yaml
+apiVersion : v1
+  kind: Pod
+  metadata:
+    name: redis-php
+    labels:
+      name: redis-php
+  spec:
+    containers:
+    - name: frontend
+      image: kubequide/questbook-php-frontend:localredis
+      ports :
+      - containerPort: 80
+    - name: redis
+      image: kubequide/redis-master
+      ports :
+      - containerPort: 6379
