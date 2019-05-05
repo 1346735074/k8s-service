@@ -1,0 +1,32 @@
+#----------rc-------------
+apiVersion: v1
+kind : ReplicationController
+metadata:
+  name: myweb
+spec:
+  replicas: 1
+  selector:
+    app: myweb
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      containers:
+        - name: myweb
+          image: kubeguide/tomcat-app:v1
+          ports:
+          - containerPort : 8080
+---
+#----------svc-------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: myweb
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30002
+  selector:
+    app: myweb
