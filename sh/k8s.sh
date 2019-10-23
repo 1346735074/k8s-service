@@ -1,0 +1,1 @@
+kubectl get svc --all-namespaces|grep 10.97.156.136

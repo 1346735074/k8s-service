@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-nacos-console
+  namespace: nacos
+  annotations:
+    nginx.ingress.kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: cz-nacos-console.deepblueai.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: nacos-headless-prod
+              servicePort: 8848

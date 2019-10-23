@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-wss-panda.deepblueai.com
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: cz-wss-panda.deepblueai.com
+      http:
+        paths:
+          - path: /api/v2/pos/pandabus/
+            backend:
+              serviceName: pos-pandabus-service/pos/pandabus/
+              servicePort: 8080
+    - host: cz-wss-panda.deepblueai.com
+      http:
+        paths:
+          - path: /api/pos/pandabus/
+            backend:
+              serviceName: pos-pandabus-service/pos/pandabus/
+              servicePort: 8080
+    - host: cz-wss-panda.deepblueai.com
+      http:
+        paths:
+          - path: /api/v2/pandabus/merchant/
+            backend:
+              serviceName: pandabus-merchant-service/pandabus/merchant/
+              servicePort: 8080
+    - host: cz-wss-panda.deepblueai.com
+      http:
+        paths:
+          - path: /api/pandabus/merchant/
+            backend:
+              serviceName: pandabus-merchant-service/pandabus/merchant/
+              servicePort: 8080
+  tls:
+    - hosts:
+        - cz-wss-panda.deepblueai.com
+      secretName: deepblueai-certs
