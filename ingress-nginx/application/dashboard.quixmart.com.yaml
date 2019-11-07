@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-dashboard.quixmart.com
+  namespace: data-center
+  annotations:
+    nginx.ingress.kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: cz-dashboard.quixmart.com
+      http:
+        paths:
+          - path: /flink/
+            backend:
+              serviceName: flink-jobmanager
+              servicePort: 8081
+    - host: cz-dashboard.quixmart.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: web-datacenter-dashboard
+              servicePort: 9999
+    - host: cz-dashboard.quixmart.com
+      http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: app-streamda-service
+              servicePort: 9998
+  tls:
+    - hosts:
+        - cz-dashboard.quixmart.com
+      secretName: deepblueai-certs
